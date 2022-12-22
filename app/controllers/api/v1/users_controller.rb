@@ -11,7 +11,6 @@ class Api::V1::UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
-    puts user_params
     if @user.update(user_params)
       render json: @user, status: :ok
     else
