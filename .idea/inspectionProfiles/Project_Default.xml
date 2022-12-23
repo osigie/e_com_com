@@ -2,7 +2,7 @@
   <profile version="1.0">
     <option name="myName" value="Project Default" />
     <inspection_tool class="Rubocop" enabled="true" level="WARNING" enabled_by_default="true">
-      <option name="myRunRubocopOnSave" value="true" />
+      <option name="myUseStandardGemIfPossible" value="true" />
     </inspection_tool>
   </profile>
 </component>
