@@ -14,7 +14,7 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     # test to ensure response contain the correct email
     json_response = JSON.parse(self.response.body)
-    assert_equal(@user.email, json_response["email"], "email is invalid")
+    assert_equal(@user.email, json_response["data"]["attributes"]["email"], "email is invalid")
   end
 
   test "should create user" do
