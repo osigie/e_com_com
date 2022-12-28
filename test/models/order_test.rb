@@ -9,4 +9,6 @@ class OrderTest < ActiveSupport::TestCase
     order.total = -1
     assert_not order.valid?
   end
+
+
 end
