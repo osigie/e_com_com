@@ -14,7 +14,6 @@ class Product < ApplicationRecord
     products = products.above_or_equal_to_price(params[:min_price].to_f) if params[:min_price]
     products = products.below_or_equal_to_price(params[:max_price].to_f) if params[:max_price]
     products = products.recent if params[:recent]
-
     products
   end
 end
