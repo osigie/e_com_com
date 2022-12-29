@@ -6,6 +6,7 @@ class Api::V1::OrdersControllerTest < ActionDispatch::IntegrationTest
   # end
   setup do
     @order = orders(:one)
+    @order_params = { order: {product_ids: [products(:one).id, products(:two).id],total: 50} }
   end
 
   test "should forbid orders for unloggin users " do
@@ -13,7 +14,7 @@ class Api::V1::OrdersControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
-  test "should show orders for login users " do
+  test "should show orders for login users" do
     get api_v1_orders_url, headers:{Authorization: JsonWebToken.encode(user_id:@order.user_id)},as: :json
     assert_response :success
     json_response = JSON.parse(self.response.body)
@@ -28,5 +29,21 @@ class Api::V1::OrdersControllerTest < ActionDispatch::IntegrationTest
     assert_equal @order.products.first.title, includes_product_attr["title"]
 
   end
+
+
+  test "should forbid create orders for unloggin users " do
+    assert_no_difference("Order.count") do
+      post api_v1_orders_url, params:@order_params, as: :json
+    end
+    assert_response :forbidden
+  end
+
+  test "should create order with two products" do
+    assert_difference("Order.count", 1) do
+      post api_v1_orders_url, params:@order_params, headers:{Authorization:JsonWebToken.encode(user_id:@order.user_id)}, as: :json
+    end
+    assert_response :created
+  end
+
 
 end
